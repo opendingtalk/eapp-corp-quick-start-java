@@ -37,13 +37,12 @@ public class IndexController {
 	}
 
 	/**
-	 * 钉钉用户登录，显示当前登录的企业和用户
+	 * 钉钉用户登录，显示当前登录用户的userId
 	 * @param requestAuthCode	免登临时code
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public ServiceResult login(@RequestParam(value = "authCode") String requestAuthCode) {
-		Long start = System.currentTimeMillis();
 		//获取accessToken,注意正是代码要有异常流处理
 		String accessToken = AccessTokenUtil.getToken();
 

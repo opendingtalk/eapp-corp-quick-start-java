@@ -9,5 +9,5 @@ public class URLConstant {
     /**
      *获取用户在企业内userId的接口URL
      */
-    public static final String URL_GET_USER_INFO = "https://oapi.dingtalk.com/user/getuserinfo";
+    public static final String URL_GET_USER_INFO = "https://pre-oapi.dingtalk.com/user/getuserinfo";
 }
