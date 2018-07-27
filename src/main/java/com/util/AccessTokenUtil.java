@@ -23,8 +23,6 @@ public class AccessTokenUtil {
 
             request.setAppkey(Constant.APP_KEY);
             request.setAppsecret(Constant.APP_SECRET);
-            //request.setCorpid(Constant.APP_KEY);
-            //request.setAppsecret(Constant.APP_SECRET);
             request.setHttpMethod("GET");
             OapiGettokenResponse response = client.execute(request);
             String accessToken = response.getAccessToken();
