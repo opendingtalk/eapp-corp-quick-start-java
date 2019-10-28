@@ -1,4 +1,4 @@
-package com.config;
+package com.dadapro.config;
 
 public class URLConstant {
     /**
