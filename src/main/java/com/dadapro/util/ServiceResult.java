@@ -1,4 +1,4 @@
-package com.util;
+package com.dadapro.util;
 
 import java.io.Serializable;
 

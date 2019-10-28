@@ -1,6 +1,7 @@
-package com.controller;
+package com.dadapro.controller;
 
-import com.config.URLConstant;
+import com.dadapro.config.Constant;
+import com.dadapro.config.URLConstant;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiUserGetRequest;
@@ -8,10 +9,12 @@ import com.dingtalk.api.request.OapiUserGetuserinfoRequest;
 import com.dingtalk.api.response.OapiUserGetResponse;
 import com.dingtalk.api.response.OapiUserGetuserinfoResponse;
 import com.taobao.api.ApiException;
-import com.util.AccessTokenUtil;
-import com.util.ServiceResult;
+import com.dadapro.util.AccessTokenUtil;
+import com.dadapro.util.ServiceResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,6 +26,9 @@ import java.util.Map;
 @RestController
 public class IndexController {
     private static final Logger bizLogger = LoggerFactory.getLogger(IndexController.class);
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     /**
      * 欢迎页面,通过url访问，判断后端服务是否启动
@@ -41,7 +47,7 @@ public class IndexController {
     @ResponseBody
     public ServiceResult login(@RequestParam(value = "authCode") String requestAuthCode) {
         //获取accessToken,注意正是代码要有异常流处理
-        String accessToken = AccessTokenUtil.getToken();
+        String accessToken = AccessTokenUtil.getInstance().getToken();
 
         //获取用户信息
         DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_USER_INFO);
@@ -89,6 +95,23 @@ public class IndexController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 单条消息发送给单个队列，该队列只有一个消费者
+     *
+     * @return
+     */
+    @GetMapping(value = "send")
+    public String send(@RequestParam String username) throws ApiException {
+
+        String content = "Date:" + System.currentTimeMillis();
+        //发送默认交换机对应的的队列kinson
+        String userId = AccessTokenUtil.getInstance().getDingsUserId("赵文");
+
+//        amqpTemplate.convertAndSend(Constant.MQ_QQ_NAME, username);
+        bizLogger.info("J1-> " + content + "  userId +  " + userId);
+        return content;
     }
 
 }
