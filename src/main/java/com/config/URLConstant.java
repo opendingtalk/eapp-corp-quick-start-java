@@ -4,7 +4,7 @@ public class URLConstant {
     /**
      * 钉钉网关gettoken地址
      */
-    public static final String URL_GET_TOKKEN = "https://oapi.dingtalk.com/gettoken";
+    public static final String URL_GET_TOKEN = "https://oapi.dingtalk.com/gettoken";
 
     /**
      *获取用户在企业内userId的接口URL
